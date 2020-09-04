@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
+
+import { buyProductMochaccino, buyProductCappuccino, buyProductChocolate, buyProductTea } from './actions/buyProductAction';
 import './App.css';
 
-function App() {
+const App = props => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>IMPACTBYTE COFFEE SHOP</h1>
+        <p>Balance: {props.data.balance.balance}</p>
+        <h3>PRODUCTS</h3>
+        <p onClick={props.buyMochaccino}>Mochaccino {props.data.product.mochaccino.stock} Rp 50000</p>
+        <p onClick={props.buyCappuccino}>Cappuccino {props.data.product.cappuccino.stock} Rp 35000</p>
+        <p onClick={props.buyChocolate}>Chocolate {props.data.product.chocolate.stock} Rp 25000</p>
+        <p onClick={props.buyTea}>Tea {props.data.product.tea.stock} Rp 15000</p>
       </header>
+
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    data: state,
+  }
+}
+
+// Menggunakan action yang di ada redux untuk digunakan ke komponen ini sebagai props
+const mapDispatchToProps = (dispatch) => {
+  return {
+    buyMochaccino: () => dispatch(buyProductMochaccino),
+    buyCappuccino: () => dispatch(buyProductCappuccino),
+    buyChocolate: () => dispatch(buyProductChocolate),
+    buyTea: () => dispatch(buyProductTea),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
